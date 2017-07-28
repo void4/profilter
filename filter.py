@@ -3,22 +3,23 @@ import codecs
 
 blacklist = []
 with codecs.open("blacklist.txt", "r", "utf-8") as f:
-    blacklist = [w.strip() for w in f.readlines()]
+    blacklist = [w.strip().lower() for w in f.readlines()]
 
 def on_connect():
-    print('connected')
+    print('Connected')
 
 def on_disconnect():
-    print('disconnect')
+    print('Disconnected')
 
 def on_reconnect():
-    print('reconnect')
+    print('Reconnected')
 
 def on_message(args):
     match = None
+    message = [w.strip().lower() for w in args["message"].split()]
 
     for word in blacklist:
-        if word in args["message"].split():
+        if word in message:
             match = word
             break
 
